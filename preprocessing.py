@@ -8,8 +8,19 @@ except:
    import pickle
 
 
-#use every $skipRate training data
-def readRaw(path, func, skipRate):
+'''
+Assuming that data is stored as JSON in text files delimited by newlines,
+iterates through all files in the given directory, and executes the function in
+the parameter to record user-defined data.
+Args:
+    path (string) - relative file location of training data
+    func (method) - operations to execute on each comment
+    skipRate (int) [optional]: Given a larger than needed training set, only use
+        every $skipRate comment in each file.
+Returns:
+    Contents of texts and labels (lists) from the processed dataset.
+'''
+def readRaw(path, func, skipRate = 1):
     texts = []
     labels = []
     for corpusFile in os.listdir(path):
@@ -26,6 +37,12 @@ def readRaw(path, func, skipRate):
                     func(comment, texts, labels)
     return texts, labels
 
+
+'''
+Obtains a list of swear words and pickles it to disk.
+Returns:
+    List of swear words (strings)
+'''
 def getSwearList():
     raw = requests.get('http://www.cs.cmu.edu/~biglou/resources/bad-words.txt')
     swearList = [str(swear) for swear in raw.text.split()]
@@ -33,6 +50,16 @@ def getSwearList():
         pickle.dump(swearList, pickleFile, pickle.HIGHEST_PROTOCOL)
     return swearList
 
+
+'''
+Preprocesses comment bodies for classification. Removes punctuation, converts to
+lowercase, removes non-alphanumeric characters. Optionally lemmatizes comment.
+Args:
+    comment (string): body of comment to Preprocesses
+    lemm (boolean) [optional]: indication of whether or not to lemmatize comment
+Returns:
+    Processed comment body (string)
+'''
 def ngramPreprocess(comment, lemm = True):
     starting = str(comment.encode('utf-8','replace')).lower()
     starting = starting.replace('](', '] (')
@@ -52,7 +79,16 @@ def ngramPreprocess(comment, lemm = True):
                     and len(token) > 0]
     return ' '.join(tokens)
 
-#blobber needed to not re-train for each comment
+
+'''
+Performs two types of sentiment analysis on a comment.
+Args:
+    comment (string): body of comment
+    blobber (Blobber): Textblob Blobber trained on NaiveBayesAnalyzer
+Returns:
+    As tuple:
+        polarity, subjectivity, pos, neg [int]: analysis results
+'''
 def sentimentAnalysis(comment, blobber):
     patternsSenti = TextBlob(comment)
     polarity = patternsSenti.sentiment.polarity
@@ -62,6 +98,17 @@ def sentimentAnalysis(comment, blobber):
     neg = bayesSenti.sentiment.p_neg
     return polarity, subjectivity, pos, neg
 
+
+'''
+Extracts word, character, and sentence count as well as average lengths.
+Args:
+    comment (string): body of comment
+    swearList (list of string): list of words to consider swears
+Returns:
+    As tuple:
+        sentences, words, characters, swears [int],
+        average word length [float]
+'''
 def counts(comment, swearList):
     blob = TextBlob(comment)
     sentences = len(blob.sentences)
