@@ -94,6 +94,6 @@ def createClusters(skipRate = 15, edgesPerNode = 3):
                     'source': subreddit,
                     'target': cluster[target]
                 })
-    with open('nodesDict.pkl', 'wb') as pickleFile:
+    with open('nodesDict2.pkl', 'wb') as pickleFile:
         pickle.dump(clusterDict, pickleFile, pickle.HIGHEST_PROTOCOL)
     return clusterDict
