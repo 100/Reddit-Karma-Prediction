@@ -1,1 +1,2 @@
-ngramBinaryClf: tested 0.730085305779 accuracy on 1/120 of ~2 million comments
+ngramBinaryClf (with 2 classes): 0.783877943296
+fullClf (with 5 classes): 0.757012606555

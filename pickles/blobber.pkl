@@ -1,0 +1,18 @@
+Äctextblob.blob
+Blobber
+q)Åq}q(U
+pos_taggerqctextblob.en.taggers
+NLTKTagger
+q)Åq}qbU	tokenizerqctextblob.tokenizers
+WordTokenizer
+q	)Åq
+}qbUparserqctextblob.en.parsers
+PatternParser
+q)Åq}qbUanalyzerqctextblob.en.sentiments
+NaiveBayesAnalyzer
+q)Åq}q(U_trainedqâUfeature_extractorqctextblob.en.sentiments
+_default_feature_extractor
+qU_classifierqNubUnp_extractorqctextblob.en.np_extractors
+FastNPExtractor
+q)Åq}qhâsbU
+classifierqNub.
