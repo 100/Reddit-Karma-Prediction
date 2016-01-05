@@ -1,0 +1,38 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #ecf0f1;
+    color: #0f0f0f;
+}
+
+a {
+    text-decoration: underline;
+    -moz-text-decoration-color: red; /* Code for Firefox */
+    text-decoration-color: red;
+}
+
+.title {
+    font-size: 500%;
+    font-weight: bold;
+}
+
+.secondaryTitle {
+    font-size: 200%;
+}
+
+.titleList {
+    list-style-type: none;
+    display: inline;
+}
+
+.titleListElement {
+    display: block;
+    padding: 20px;
+}
+
+footer {
+    padding: 5px;
+}
+
+.heading {
+    height: 100%;
+}

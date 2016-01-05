@@ -36,10 +36,10 @@ Returns:
 '''
 def assignBin(score):
     if score <= 0: return 'negative'
-    if score >= 1 and score <= 5: return 'low'
-    if score >= 6 and score <= 15: return 'medium'
-    if score >= 16 and score <= 50: return 'high'
-    if score >= 51: return 'very high'
+    if score >= 1 and score <= 3: return 'low'
+    if score >= 4 and score <= 10: return 'medium'
+    if score >= 11 and score <= 20: return 'high'
+    if score >= 21: return 'very high'
 
 
 '''
@@ -54,7 +54,7 @@ Returns:
 def vectorize(blobber, comment, ngramClf):
     cleansed = ngramPreprocess(comment, lemm = False)
     polarity, subjectivity, pos, neg = sentimentAnalysis(cleansed, blobber)
-    with open('swearList.pkl', 'rb') as swearPickle:
+    with open('pickles/swearList.pkl', 'rb') as swearPickle:
         sentences, words, characters, averageWordLen, swears = counts(cleansed, pickle.load(swearPickle))
     vector = [sentences, words, characters, averageWordLen, swears, polarity,
                 subjectivity, pos, neg,
@@ -64,21 +64,31 @@ def vectorize(blobber, comment, ngramClf):
 
 '''
 Creates and trains classifier with metadata features, and pickles to disk
-upon completion.
+upon completion. Since mass-vectorizing comments is a relatively slow process,
+includes verbosity (print current progress).
 Args:
     blobber (Textblob Blobber): pre-trained Blobber object
     ngramClf (sklearn classifier): binary classifier trained on n-grams
     corpus (list of string): list of comment bodies
     labels (list of string): list of comment classifications
+    verbose (boolean) [optional]: print vectorization status if true
 Returns:
     classifier (sklearn classifier)
     matrix (list of lists): matrix representing vectorized training data
     labels (list of string): list of comment classifications
 '''
-def createFullClassifier(blobber, ngramClf, corpus, labels):
+def createFullClassifier(blobber, ngramClf, corpus, labels, verbose = True):
     matrix = []
-    for comment in corpus:
-        matrix.append(vectorize(blobber, comment, ngramClf))
+    if verbose == True:
+        count = 0
+        for comment in corpus:
+            matrix.append(vectorize(blobber, comment, ngramClf))
+            count += 1
+            print ('Vectorized ' + str(count) + ' data points out of ' +
+                str(len(corpus)) + '.')
+    else:
+        for comment in corpus:
+            matrix.append(vectorize(blobber, comment, ngramClf))
     clf = Pipeline([
             ('scaler', StandardScaler()),
             ('clf', LinearSVC(
@@ -88,7 +98,7 @@ def createFullClassifier(blobber, ngramClf, corpus, labels):
                 C = .001
             ))])
     clf.fit(numpy.array(matrix), labels)
-    with open('fullClassifier.pkl', 'wb') as pickleFile:
+    with open('pickles/fullClassifier.pkl', 'wb') as pickleFile:
         pickle.dump(clf, pickleFile, pickle.HIGHEST_PROTOCOL)
     return clf, matrix, labels
 
@@ -117,7 +127,7 @@ Given a classifier, perform grid search to find optimal parameter values, and
 prints the best values.
 Args:
     clf (sklearn classifier): classifier to perform search with
-    corpus (list of string): list of comment bodies
+    corpus (list of string): matrix of vectorized comment bodies
     labels (list of string): list of comment classifications
     parameters (dict): dictionary of {'parameter': (values,)} to test in the grid search
         Example: parameters = {'clf__C': (1, 10, .01, .001)}

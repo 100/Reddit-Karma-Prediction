@@ -48,7 +48,7 @@ def createNgramBinaryClassifier(corpus, labels):
                 class_weight = 'balanced',
             ))])
     clf.fit(corpus, labels)
-    with open('ngramBinaryClf.pkl', 'wb') as pickleFile:
+    with open('pickles/ngramBinaryClf.pkl', 'wb') as pickleFile:
         pickle.dump(clf, pickleFile, pickle.HIGHEST_PROTOCOL)
     return clf
 

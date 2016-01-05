@@ -13,10 +13,12 @@ and save resulting dictionary to disk.
 Args:
     path (string): file path to directory of training data
     skipRate (int) [optional]: use every $skipRate comment in the training data
+    minimum (int) [optional]: subreddit must have $minimum comments in total to
+        be included in final dictionary
 Returns:
     subredditAverages (dict): {subreddit: average karma} pairs
 '''
-def computeAverages(path, skipRate = 1):
+def computeAverages(path, skipRate = 1, minimum = 25):
     subredditScores = {}
     subredditNumComs = {}
     totalKarma = 0
@@ -45,8 +47,10 @@ def computeAverages(path, skipRate = 1):
     print str(numComments) + ' comments analyzed.'
     subredditAverages = {}
     for subreddit, score in subredditScores.iteritems():
-        subredditAverages[subreddit]= float(score) / subredditNumComs[subreddit]
-    with open('subredditAverages.pkl', 'wb') as pickleFile:
+        if subredditNumComs[subreddit] > 25:
+            subredditAverages[subreddit]= float(score) /
+                subredditNumComs[subreddit]
+    with open('pickles/subredditAverages.pkl', 'wb') as pickleFile:
         pickle.dump(subredditAverages, pickleFile, pickle.HIGHEST_PROTOCOL)
     return subredditAverages
 
@@ -61,7 +65,7 @@ Returns:
     clusterDict (dict): JSON representation of data needed for alchemy.js
 '''
 def createClusters(skipRate = 15, edgesPerNode = 3):
-    with open('subredditAverages.pkl', 'rb') as pickleFile:
+    with open('pickles/subredditAverages.pkl', 'rb') as pickleFile:
         averagesDict = pickle.load(pickleFile)
     kmeans = KMeans(
         n_clusters = 5,
@@ -94,6 +98,6 @@ def createClusters(skipRate = 15, edgesPerNode = 3):
                     'source': subreddit,
                     'target': cluster[target]
                 })
-    with open('nodesDict2.pkl', 'wb') as pickleFile:
+    with open('pickles/nodesDictLarge.pkl', 'wb') as pickleFile:
         pickle.dump(clusterDict, pickleFile, pickle.HIGHEST_PROTOCOL)
     return clusterDict

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Reddit karma analytics">
+    <meta name="author" content="Devin Soni">
+    <title>Reddit Karma Analytics</title>
+    <link rel="icon" href="static/favicon.ico">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="static/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="static/sticky-footer.css" type="text/css"/>
+    <link rel="stylesheet" href="static/navbar.css" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/custom.css" type="text/css"/>
+
+    <!-- JS -->
+    <script src="static/jquery-1.11.3.min.js"></script>
+    <script src="static/bootstrap.min.js"></script>
+
+    {% block imports %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar navbar-static-top navbar-custom">
+        <div class="container">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/visualize">Visualize</a></li>
+            <li><a href="/try">Try it</a></li>
+            <li><a href="/apidocs">API Documentation</a></li>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Made with ♥ by <a href="https://github.com/d-soni">Devin Soni</a>. See the code <a href="https://github.com/d-soni/Reddit-Karma-Prediction">here</a>.</p>
+    </div>
+</footer>
+
+</html>

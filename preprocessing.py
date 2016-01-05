@@ -46,7 +46,7 @@ Returns:
 def getSwearList():
     raw = requests.get('http://www.cs.cmu.edu/~biglou/resources/bad-words.txt')
     swearList = [str(swear) for swear in raw.text.split()]
-    with open('swearList.pkl', 'wb') as pickleFile:
+    with open('pickles/swearList.pkl', 'wb') as pickleFile:
         pickle.dump(swearList, pickleFile, pickle.HIGHEST_PROTOCOL)
     return swearList
 
