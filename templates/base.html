@@ -11,34 +11,46 @@
     <link rel="icon" href="static/favicon.ico">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="static/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="static/sticky-footer.css" type="text/css"/>
-    <link rel="stylesheet" href="static/navbar.css" type="text/css"/>
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="static/custom.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/sticky-footer.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/navbar.css" type="text/css"/>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400, 700, 900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="static/css/custom.css" type="text/css"/>
 
     <!-- JS -->
-    <script src="static/jquery-1.11.3.min.js"></script>
-    <script src="static/bootstrap.min.js"></script>
+    <script src="static/js/jquery-1.11.3.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
 
     {% block imports %}{% endblock %}
 </head>
 
 <body>
-    <nav class="navbar navbar-static-top navbar-custom">
-        <div class="container">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/visualize">Visualize</a></li>
-            <li><a href="/try">Try it</a></li>
-            <li><a href="/apidocs">API Documentation</a></li>
+    <div id="custom-bootstrap-menu" class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-menubuilder">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="link" href="/">Home</a>
+                    </li>
+                    <li><a class="link" href="/visualize">Visualize</a>
+                    </li>
+                    <li><a class="link" href="/try">Try it</a>
+                    </li>
+                    <li><a class="link" href="/apidocs">API Documentation</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </nav>
+    </div>
     {% block content %}{% endblock %}
 </body>
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">Made with ♥ by <a href="https://github.com/d-soni">Devin Soni</a>. See the code <a href="https://github.com/d-soni/Reddit-Karma-Prediction">here</a>.</p>
+        <p class="text-muted">Made with <span class="link">♥</span> by <a href="https://github.com/d-soni">Devin Soni</a>. See the code <a href="https://github.com/d-soni/Reddit-Karma-Prediction">here</a>.</p>
     </div>
 </footer>
 

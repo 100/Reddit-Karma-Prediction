@@ -1,4 +1,4 @@
 ngramBinaryClf (with 2 classes): 0.783877943296
 fullClf (with 5 classes, new bins): 0.686886886887
 
-28,148 subreddits
+3000 subreddits

@@ -1,13 +1,21 @@
 body {
     font-family: 'Lato', sans-serif;
-    background-color: #ecf0f1;
+    background-color: #fdfefe;
     color: #0f0f0f;
+    height: 100%;
 }
 
-a {
-    text-decoration: underline;
-    -moz-text-decoration-color: red; /* Code for Firefox */
-    text-decoration-color: red;
+#cy {
+    margin: auto;
+    width: 90%;
+    height: 500px;
+    display: block;
+}
+
+.link {
+    color: red !important;
+    -moz-text-decoration-color: red !important;
+    text-decoration-color: red !important;
 }
 
 .title {
@@ -25,12 +33,13 @@ a {
 }
 
 .titleListElement {
+    color: red !important;
     display: block;
-    padding: 20px;
+    padding: 1px;
 }
 
 footer {
-    padding: 5px;
+    padding: 0px;
 }
 
 .heading {

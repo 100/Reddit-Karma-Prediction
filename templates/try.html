@@ -4,7 +4,53 @@
 {% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert"><p>{{message}}</p></div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
+            <h2 class="secondaryTitle"><b>Try it</b></h2>
+            <h4>Input a comment and see the range of karma that it will most likely fall under.</h4>
+            <p>Intermediate and final classifications were done using a linear SVM, and sentiment analyses were completed using TextBlob.
+            <p><b>Comments can fall under one of five buckets:</b></p>
+            <ul class="list-group">
+                <li class="list-group-item"><b>Negative:</b> Less than 0 points</li>
+                <li class="list-group-item"><b>Low:</b> Between 1 and 3 points</li>
+                <li class="list-group-item"><b>Medium:</b> Between 4 and 10 points</li>
+                <li class="list-group-item"><b>High:</b> Between 11 and 20 points</li>
+                <li class="list-group-item"><b>Very high:</b> More than 21 points</li>
+            </ul>
+            {% if classification %}
+                <h2>Results:</h2>
+                <h4>Your comment was classified as <b>{{ classification }}</b>. See the above bucket distribution for the numerical estimate.</h4>
+                <p>The classification was based on the following metadata:</p>
+                <ul class="list-group">
+                    <li class="list-group-item">Sentences:  {{ vector[0] }}</li>
+                    <li class="list-group-item">Words:  {{ vector[1] }} </li>
+                    <li class="list-group-item">Characters:  {{ vector[2] }}</li>
+                    <li class="list-group-item">Average word length:  {{ vector[3] }}</li>
+                    <li class="list-group-item">Swears:  {{ vector[4] }}</li>
+                    <li class="list-group-item">Polarity:  {{ vector[5] }}</li>
+                    <li class="list-group-item">Subjectivity:  {{ vector[6] }}</li>
+                    <li class="list-group-item">Positivity:  {{ vector[7] }}</li>
+                    <li class="list-group-item">Negativity:  {{ vector[8] }}</li>
+                    <li class="list-group-item">Binary classification:  {{ vector[9] }}</li>
+                </ul>
+            {% endif %}
+            <form name="commentForm" id="commentForm" method="post">
+                <div class="form-group">
+                    <label for="comment">Test it out: (this may take a few moments)</label>
+                    {{ form.comment(rows=5, class='form-control') }}
+                </div>
+                <button type="submit" class="btn btn-danger">Submit</button>
+            </form>
+            <br>
+        </div>
+    </div>
+</div>
 {% endblock %}
