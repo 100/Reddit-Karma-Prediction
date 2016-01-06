@@ -1,0 +1,2 @@
+numpy=1.10.1=py27_0
+scikit-learn=0.17=np110py27_1

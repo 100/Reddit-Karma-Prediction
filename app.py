@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify, make_response, \
 from wtforms import Form, TextAreaField, validators
 from flask_limiter import Limiter
 from createFullClassifier import vectorize
-import json
+import json, os
 try:
    import cPickle as pickle
 except:
@@ -112,4 +112,5 @@ def ratelimitExceeded(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
