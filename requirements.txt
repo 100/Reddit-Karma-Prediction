@@ -8,4 +8,4 @@ WTForms==2.1
 requests==2.9.0
 numpy==1.8.1
 scipy==0.14.0
-scikit-learn==0.15.2
+scikit-learn==0.17
