@@ -95,7 +95,7 @@ def createClusters(edgesPerNode = 0):
                 'size': int(15 * math.log(numComs[subreddit], 1000))
             },
             'position': {
-              'x': kmeans.predict([avg])[0]*400 + random.randint(-250, 250),
+              'x': numpy.asscalar(numpy.array([kmeans.predict([avg])[0]]))*400 + random.randint(-250, 250),
               'y': random.randint(0, 700)
         }})
         idCounter += 1
@@ -121,7 +121,7 @@ def createClusters(edgesPerNode = 0):
             'data': {
                 'id': 'cluster' + str(idx),
                 'sub': 'cluster' + str(idx),
-                'average': kmeans.cluster_centers_[idx][0],
+                'average': numpy.asscalar(numpy.array(kmeans.cluster_centers_[idx][0])),
                 'cluster': idx,
                 'size': 35
             },
