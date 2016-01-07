@@ -10,7 +10,7 @@ except:
    import pickle
 
 app = Flask(__name__)
-app.secret_key = 'many random bytes'
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "star-this-repo-pls")
 limiter = Limiter(app)
 
 class CommentForm(Form):
