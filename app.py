@@ -79,7 +79,7 @@ def apidocs():
 
 
 @app.route('/api')
-@limiter.limit("10 per minute")
+@limiter.limit("1 per minute")
 def api():
     if request.args is None:
         abort(400)
