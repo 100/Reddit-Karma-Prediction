@@ -5,6 +5,7 @@ gunicorn==0.17.2
 textblob==0.11.0
 Flask-Limiter==0.9.1
 WTForms==2.1
+requests==2.9.0
 numpy==1.8.1
 scipy==0.14.0
 scikit-learn==0.14.1
