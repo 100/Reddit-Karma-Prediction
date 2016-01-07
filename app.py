@@ -55,7 +55,7 @@ def tryIt():
     form = CommentForm(request.form)
     if request.method == 'POST':
         if form.validate():
-            comment = form.comment.data
+            comment = str(form.comment.data)
             vector, prediction = classifyComment('bins', comment)
             if vector[9] == 1:
                 vector[9] == 'positive'
