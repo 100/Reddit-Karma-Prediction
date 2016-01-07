@@ -6,6 +6,6 @@ textblob==0.11.0
 Flask-Limiter==0.9.1
 WTForms==2.1
 
-numpy==1.9.1
-scipy==0.14.0
-scikit-learn==0.15.2
+numpy
+scipy
+scikit-learn
