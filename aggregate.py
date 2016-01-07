@@ -91,7 +91,7 @@ def createClusters(edgesPerNode = 0):
                 'id': idCounter,
                 'sub': subreddit,
                 'average': round(avg, 3),
-                'cluster': kmeans.predict([avg])[0],
+                'cluster': numpy.asscalar(numpy.array([kmeans.predict([avg])[0]])),
                 'size': int(15 * math.log(numComs[subreddit], 1000))
             },
             'position': {
