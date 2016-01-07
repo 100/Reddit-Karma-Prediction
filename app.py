@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, jsonify, make_response, \
 from wtforms import Form, TextAreaField, validators
 from flask_limiter import Limiter
 from createFullClassifier import vectorize
+import numpy
 import json, os
 try:
    import cPickle as pickle
