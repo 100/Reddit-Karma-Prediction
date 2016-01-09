@@ -61,6 +61,15 @@ def vectorize(blobber, comment, ngramClf):
                 1 if ngramClf.predict([comment]) == ['popular'] else 0]
     return vector
 
+def vectorizeNoNgram(blobber, comment):
+    cleansed = ngramPreprocess(comment, lemm = False)
+    polarity, subjectivity, pos, neg = sentimentAnalysis(cleansed, blobber)
+    with open('pickles/swearList.pkl', 'rb') as swearPickle:
+        sentences, words, characters, averageWordLen, swears = counts(cleansed, pickle.load(swearPickle))
+    vector = [sentences, words, characters, averageWordLen, swears, polarity,
+                subjectivity, pos, neg, 1]
+    return vector
+
 
 '''
 Creates and trains classifier with metadata features, and pickles to disk

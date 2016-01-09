@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, make_response, \
     flash, abort
 from wtforms import Form, TextAreaField, validators
 from flask_limiter import Limiter
-from createFullClassifier import vectorize
+from createFullClassifier import vectorize, vectorizeNoNgram
 import numpy
 import json, os
 try:
@@ -26,17 +26,20 @@ def validateRequest(type, text):
         return False
     return True
 
-def classifyComment(type, text):
+def classifyComment(type, text, ngram = True):
     if type == 'bins':
         with open('pickles/fullClassifier.pkl', 'rb') as pickleFile:
             fullClf = pickle.load(pickleFile)
-        with open('pickles/ngramBinaryClf.pkl', 'rb') as pickleFile:
-            ngram = pickle.load(pickleFile)
         with open('pickles/blobber.pkl', 'rb') as pickleFile:
             blobber = pickle.load(pickleFile)
         with open('pickles/swearList.pkl', 'rb') as pickleFile:
             swears = pickle.load(pickleFile)
-        vector = vectorize(blobber, text, ngram)
+        if ngram == True:
+            with open('pickles/ngramBinaryClf.pkl', 'rb') as pickleFile:
+                ngram = pickle.load(pickleFile)
+            vector = vectorize(blobber, text, ngram)
+        else:
+            vector = vectorizeNoNgram(blobber, text)
         prediction = fullClf.predict([vector])[0]
         return vector, prediction
     if type == 'binary':
@@ -56,7 +59,7 @@ def tryIt():
     if request.method == 'POST':
         if form.validate():
             comment = str(form.comment.data)
-            vector, prediction = classifyComment('bins', comment)
+            vector, prediction = classifyComment('bins', comment, ngram = False)
             if vector[9] == 1:
                 vector[9] == 'positive'
             else:
