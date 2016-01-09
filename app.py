@@ -98,7 +98,7 @@ def api():
         abort(400)
     text = str(text)
     if clfType == 'bins':
-        __, prediction = classifyComment('bins', text)
+        __, prediction = classifyComment('bins', text, ngram = False)
     else:
         prediction = classifyComment('binary', comment)
     status = {'status': 'ok', 'type': clfType, 'prediction': prediction}
