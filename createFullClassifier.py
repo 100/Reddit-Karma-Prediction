@@ -61,6 +61,10 @@ def vectorize(blobber, comment, ngramClf):
                 1 if ngramClf.predict([comment]) == ['popular'] else 0]
     return vector
 
+'''
+Same as above, but with the ground assumption that the binary classifier would
+return a positive classification. [To reduce computational time]
+'''
 def vectorizeNoNgram(blobber, comment):
     cleansed = ngramPreprocess(comment, lemm = False)
     polarity, subjectivity, pos, neg = sentimentAnalysis(cleansed, blobber)
