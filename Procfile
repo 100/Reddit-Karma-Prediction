@@ -1,1 +1,1 @@
-web: gunicorn app:app --preload --max-requests 10 --timeout 25
+web: uwsgi uwsgi.ini
